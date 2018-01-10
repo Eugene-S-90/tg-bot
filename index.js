@@ -49,6 +49,7 @@ function randomAnswer() {
 }
 
 console.log("THE BOT-SERVER IS RUNNING!");
+//im here!!
 
 
 
