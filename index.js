@@ -25,19 +25,29 @@ bot.onText(wow, msg => {
     // const text = `Fuck you ,${msg.from.first_name}`;
     let parsedText = parseInt(msg.text.slice(1)) * 60;
     let fixedText = parseInt(msg.text.slice(1))
-    myFunction();
+    let lol = declOfNum(fixedText, ['минуту', 'минуты', 'минут']);
+    
+    function declOfNum(number, titles) {  
+        cases = [2, 0, 1, 1, 1, 2];  
+        return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
+    }
+    
+
     function myFunction() {
+       
         setInterval(function () {
             parsedText = parsedText - 1
             if (parsedText === 1) {
-                bot.sendMessage(msg.chat.id, `${msg.from.first_name} устанавливал таймер на ${fixedText} минут-(у/ы). Время вышло! ДЕЛАЙ ЧТО ДОЛЖЕН!!!!`);
+                bot.sendMessage(msg.chat.id, `${msg.from.first_name} устанавливал таймер на ${fixedText} ${lol}. Время вышло! ДЕЛАЙ ЧТО ДОЛЖЕН!!!!`);
                 bot.sendPhoto(msg.chat.id, fs.readFileSync(__dirname + "/adv.jpg"));
                 // console.log(parsedText)
             }
         }, 1000);
     }
-    const txt = `Отлично ! ты зарядил таймер на ${parsedText / 60} минут-(у/ы)!`
+    const txt = `Отлично ! ты зарядил таймер на ${parsedText / 60} ${lol}!`
     bot.sendMessage(msg.chat.id, txt)
+
+    myFunction();
 })
 
 function randomAnswer() {
@@ -49,7 +59,8 @@ function randomAnswer() {
 }
 
 console.log("THE BOT-SERVER IS RUNNING!");
-//im here!!
+
+
 
 
 
