@@ -3,14 +3,14 @@ const fs = require('fs');
 const bot = require('./config/config');
 const showNumberCases = require('./src/showNumberCases');
 
-
+let loxArray = [];
 // bot.on('message', msg => {
 //     bot.sendMessage(msg.chat.id, randomAnswer())
 // })
 
 bot.onText(/\/help/, msg => {
     const text = `Здарова,${msg.from.first_name}`;
-    const faq = `Пока я могу только ставить таймер на неограниченное число МИНУТ .Пример: "/1мин" или "/1min" `;
+    const faq = `Пока я могу только ставить таймер на неограниченное число МИНУТ .Пример: "/0" или "/1min" `;
     bot.sendMessage(msg.chat.id, text)
     bot.sendMessage(msg.chat.id, faq)
 })
@@ -19,16 +19,28 @@ bot.onText(/\/help/, msg => {
 //     const { id } = msg.chat
 //     bot.sendMessage(id,  JSON.stringify(msg))
 // })
-let loxArray = [];
+
 bot.onText(/\/wholox?/, msg => {
     const { id } = msg.chat
     bot.sendMessage(id, "Те кто хочет участвовать пишем '/go' ")
     bot.onText(/\/go/, msg => {
-        loxArray.push(msg.from.first_name);
-        bot.sendMessage(id, msg.from.first_name)
-        console.log(loxArray)
+        let isExist = loxArray.some(item => item === msg.from.first_name);
+        if (!isExist) {
+            loxArray.push(msg.from.first_name);
+            bot.sendMessage(id, msg.from.first_name);
+        }
     })
 })
+bot.onText(/\/result/, msg => {
+    bot.sendMessage(msg.chat.id, randomAnswer() || `${msg.from.first_name} ты забыл написать /wholox!!!`);
+    loxArray = [];
+    console.log('result ----> ', loxArray);
+})
+
+function randomAnswer() {
+    let rand = Math.floor(Math.random() * loxArray.length);
+    return loxArray[rand];
+}
 
 bot.onText(/.([0-9])?\w+(\s)?(min|мин)/, msg => {
     // const text = `Fuck you ,${msg.from.first_name}`;
@@ -37,9 +49,8 @@ bot.onText(/.([0-9])?\w+(\s)?(min|мин)/, msg => {
     let numberCases = showNumberCases(fixedText, ['минуту', 'минуты', 'минут']);
     let txt = `Отлично ! ты зарядил таймер на ${parsedText / 60} ${numberCases}!`;
 
-
     (() => {
-        setInterval( () => {
+        setInterval(() => {
             parsedText = parsedText - 1;
             if (parsedText === 1) {
                 bot.sendMessage(msg.chat.id, `${msg.from.first_name} устанавливал таймер на ${fixedText} ${numberCases}. Время вышло! ДЕЛАЙ ЧТО ДОЛЖЕН!!!!`);
@@ -50,14 +61,6 @@ bot.onText(/.([0-9])?\w+(\s)?(min|мин)/, msg => {
 
     bot.sendMessage(msg.chat.id, txt)
 })
-
-function randomAnswer() {
-    let phrases = ["Неплохо", "Да ты хорош!", "Хм...знатно", "Ну допустим", "И че?!"];
-    let rand = Math.floor(Math.random() * phrases.length);
-    let result = [];
-    result = phrases[rand];
-    return result;
-}
 
 console.log("THE BOT-SERVER IS RUNNING!");
 
