@@ -4,7 +4,16 @@ const TOKEN = "518232523:AAFxiG4EW0W8kRatn3vCFqspeRKgQD_KKpI";
 const fs = require('fs');
 
 const bot = new TelegramBot(TOKEN, {
-    polling: true
+    // interval сколько милисекунд ответа с клиента на сервер
+    // autoStart отвечать на все сообщения или только когда бот включен
+    // timeout таймаут между запросами
+    polling: {
+        interval: 300, 
+        autoStart: true,
+        params: {
+            timeout: 10
+        }
+    }
 })
 
 // bot.on('message', msg => {
@@ -18,6 +27,15 @@ bot.onText(/\/help/, msg => {
     bot.sendMessage(msg.chat.id, faq)
 })
 
+bot.onText(/\/test/, msg => {
+    const { id } = msg.chat
+
+    bot.sendMessage(id,  JSON.stringify(msg))
+})
+
+
+
+
 let wow;
 wow = /.([0-9])?\w+(\s)?(min|мин)/
 
@@ -26,15 +44,15 @@ bot.onText(wow, msg => {
     let parsedText = parseInt(msg.text.slice(1)) * 60;
     let fixedText = parseInt(msg.text.slice(1))
     let lol = declOfNum(fixedText, ['минуту', 'минуты', 'минут']);
-    
-    function declOfNum(number, titles) {  
-        cases = [2, 0, 1, 1, 1, 2];  
-        return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
+
+    function declOfNum(number, titles) {
+        cases = [2, 0, 1, 1, 1, 2];
+        return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
     }
-    
+
 
     function myFunction() {
-       
+
         setInterval(function () {
             parsedText = parsedText - 1
             if (parsedText === 1) {
