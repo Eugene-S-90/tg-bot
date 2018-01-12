@@ -2,11 +2,9 @@ const fs = require('fs');
 
 const bot = require('./config/config');
 const showNumberCases = require('./src/showNumberCases');
+const randomLox = require('./src/randomLox');
 
 let loxArray = [];
-// bot.on('message', msg => {
-//     bot.sendMessage(msg.chat.id, randomAnswer())
-// })
 
 bot.onText(/\/help/, msg => {
     const text = `Здарова,${msg.from.first_name}`;
@@ -32,18 +30,11 @@ bot.onText(/\/wholox?/, msg => {
     })
 })
 bot.onText(/\/result/, msg => {
-    bot.sendMessage(msg.chat.id, randomAnswer() || `${msg.from.first_name} ты забыл написать /wholox!!!`);
+    bot.sendMessage(msg.chat.id, randomLox(loxArray) || `${msg.from.first_name} ты забыл написать /wholox!!!`);
     loxArray = [];
-    console.log('result ----> ', loxArray);
 })
 
-function randomAnswer() {
-    let rand = Math.floor(Math.random() * loxArray.length);
-    return loxArray[rand];
-}
-
 bot.onText(/.([0-9])?\w+(\s)?(min|мин)/, msg => {
-    // const text = `Fuck you ,${msg.from.first_name}`;
     let parsedText = parseInt(msg.text.slice(1)) * 60;
     let fixedText = parseInt(msg.text.slice(1))
     let numberCases = showNumberCases(fixedText, ['минуту', 'минуты', 'минут']);
