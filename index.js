@@ -20,7 +20,7 @@ bot.onText(/\/help/, msg => {
 //     bot.sendMessage(id,  JSON.stringify(msg))
 // })
 
-bot.onText(/(\/wholox)||(\/ктолох)/, msg => {
+bot.onText(/\/wholox?/, msg => {
     const { id } = msg.chat
     bot.sendMessage(id, "Те кто хочет участвовать пишем '/go' ")
     bot.onText(/\/go/, msg => {
