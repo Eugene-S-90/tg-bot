@@ -8,7 +8,7 @@ const bot = new TelegramBot(TOKEN, {
     // autoStart отвечать на все сообщения или только когда бот включен
     // timeout таймаут между запросами
     polling: {
-        interval: 300, 
+        interval: 300,
         autoStart: true,
         params: {
             timeout: 10
@@ -27,11 +27,22 @@ bot.onText(/\/help/, msg => {
     bot.sendMessage(msg.chat.id, faq)
 })
 
-bot.onText(/\/test/, msg => {
+// bot.onText(/\/test/, msg => {
+//     const { id } = msg.chat
+//     bot.sendMessage(id,  JSON.stringify(msg))
+// })
+let loxArray = [];
+bot.onText(/\/wholox?/, msg => {
     const { id } = msg.chat
-
-    bot.sendMessage(id,  JSON.stringify(msg))
+    bot.sendMessage(id, "Те кто хочет участвовать пишем '/go' ")
+    bot.onText(/\/go/, msg => {
+        loxArray.push(msg.from.first_name);
+        bot.sendMessage(id, msg.from.first_name)
+        console.log(loxArray)
+    })
 })
+
+
 
 
 
