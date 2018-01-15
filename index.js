@@ -41,7 +41,7 @@ bot.onText(/\/result/, msg => {
     loxArray = [];
 })
 
-bot.onText(/\/Chuck/, msg => {
+bot.onText(/\/chuck/, msg => {
     getChuckJokes(msg);
 })
 
