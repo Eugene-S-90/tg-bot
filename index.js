@@ -1,8 +1,10 @@
 const fs = require('fs');
-
 const bot = require('./config/config');
 const showNumberCases = require('./src/showNumberCases');
 const randomLox = require('./src/randomLox');
+const fetch = require('node-fetch')
+// const getChuckJokes = require('./src/ChuckJokes');
+
 
 let loxArray = [];
 
@@ -32,6 +34,17 @@ bot.onText(/\/wholox?/, msg => {
 bot.onText(/\/result/, msg => {
     bot.sendMessage(msg.chat.id, randomLox(loxArray) || `${msg.from.first_name} ты забыл написать /wholox!!!`);
     loxArray = [];
+})
+
+bot.onText(/\/Chuck/, msg => {
+    fetch('http://api.icndb.com/jokes/random/1')
+  .then(response => {
+    response.json()
+    .then( data => {
+        bot.sendMessage(msg.chat.id,  data.value[0].joke); 
+    })
+  })
+
 })
 
 bot.onText(/.([0-9])?\w+(\s)?(min|мин)/, msg => {
