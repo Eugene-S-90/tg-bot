@@ -2,7 +2,7 @@ const fetch = require('node-fetch')
 const bot = require('../config/config');
 
 const getChuckJokes =  async function (msg){
-  let fin ="wazzap" ;
+  let fin ;
   let response = await fetch('http://api.icndb.com/jokes/random/1')
   if (response.status == 200) {
       let data = await response.json(); // (3)
