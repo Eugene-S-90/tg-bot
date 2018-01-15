@@ -9,7 +9,6 @@ const getChuckJokes =  async function (msg){
       fin = data.value[0].joke;
       bot.sendMessage(msg.chat.id, fin);
     }
-    throw new Error(response.status);
 } 
 module.exports = getChuckJokes;
 
