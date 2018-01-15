@@ -10,7 +10,12 @@ let loxArray = [];
 
 bot.onText(/\/help/, msg => {
     const text = `Здарова,${msg.from.first_name}`;
-    const faq = `Пока я могу только ставить таймер на неограниченное число МИНУТ .Пример: "/0" или "/1min" `;
+    const faq = ` Вот что я умею :
+   === Таймер(любое колл минут) : "/1мин" или "/1min==="
+   === Генератор шуток Чака : /chuck ===
+   === Игра Кто Лишний?:) : /wholox === 
+
+   `;
     bot.sendMessage(msg.chat.id, text)
     bot.sendMessage(msg.chat.id, faq)
 })
