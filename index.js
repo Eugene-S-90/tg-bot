@@ -44,7 +44,6 @@ bot.onText(/\/Chuck/, msg => {
         bot.sendMessage(msg.chat.id,  data.value[0].joke); 
     })
   })
-
 })
 
 bot.onText(/.([0-9])?\w+(\s)?(min|мин)/, msg => {
