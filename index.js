@@ -3,7 +3,7 @@ const bot = require('./config/config');
 const showNumberCases = require('./src/showNumberCases');
 const randomLox = require('./src/randomLox');
 const fetch = require('node-fetch')
-// const getChuckJokes = require('./src/ChuckJokes');
+const getChuckJokes = require('./src/ChuckJokes');
 
 
 let loxArray = [];
@@ -37,13 +37,7 @@ bot.onText(/\/result/, msg => {
 })
 
 bot.onText(/\/Chuck/, msg => {
-    fetch('http://api.icndb.com/jokes/random/1')
-  .then(response => {
-    response.json()
-    .then( data => {
-        bot.sendMessage(msg.chat.id,  data.value[0].joke); 
-    })
-  })
+    getChuckJokes(msg);
 })
 
 bot.onText(/.([0-9])?\w+(\s)?(min|мин)/, msg => {
