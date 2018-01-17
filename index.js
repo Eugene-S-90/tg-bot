@@ -17,10 +17,16 @@ bot.onText(/\/help/, msg => {
    === Игра Кто Лишний?:) : /wholox === 
 
    `;
-    bot.sendMessage(msg.chat.id, text)
-    bot.sendMessage(msg.chat.id, faq)
+
+    bot.sendMessage(msg.chat.id,text )
+    bot.sendMessage(msg.chat.id,faq, {
+        "reply_markup": {
+            "keyboard": [["1min", "5min","10min"],   ["/chuck"], ["/wholox"]]
+            }
+        });
 })
 // ===HELP КОНЕЦ===
+
 
 // bot.onText(/\/test/, msg => {
 //     const { id } = msg.chat
