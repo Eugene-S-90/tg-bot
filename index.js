@@ -49,9 +49,9 @@ bot.onText(/\/result/, msg => {
 bot.onText(/\/chuck/i, msg => {
     getChuckJokes(msg);
 })
-// ===ШУТКИ ЧАКА КОНЕЦ===
+// ===ШУТКИ ЧАКА НАЧАЛО===
 
-// ===ИГРА ТАЙМЕР НАЧАЛО===
+// ===ТАЙМЕР НАЧАЛО===
 bot.onText(/\s([0-9])?\w+(\s)?(min|мин|минуту|минут|minutes|minute)/, msg => {
     const chatId = msg.chat.id;
     const target = msg.text.match(/\s([0-9])?\w+(\s)?(min|мин|минуту|минут|minutes|minute)/);
@@ -71,7 +71,7 @@ bot.onText(/\s([0-9])?\w+(\s)?(min|мин|минуту|минут|minutes|minute
     })();
     bot.sendMessage(chatId, txt);
 })
-// ===ИГРА ТАЙМЕР КОНЕЦ===
+// ===ТАЙМЕР КОНЕЦ===
 
 console.log("THE BOT-SERVER IS RUNNING!");
 
