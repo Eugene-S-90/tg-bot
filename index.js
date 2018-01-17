@@ -8,6 +8,7 @@ const getChuckJokes = require('./src/ChuckJokes');
 
 let loxArray = [];
 
+// ===HELP НАЧАЛО===
 bot.onText(/\/help/, msg => {
     const text = `Здарова,${msg.from.first_name}`;
     const faq = ` Вот что я умею :
@@ -19,12 +20,14 @@ bot.onText(/\/help/, msg => {
     bot.sendMessage(msg.chat.id, text)
     bot.sendMessage(msg.chat.id, faq)
 })
+// ===HELP КОНЕЦ===
 
 // bot.onText(/\/test/, msg => {
 //     const { id } = msg.chat
 //     bot.sendMessage(id,  JSON.stringify(msg))
 // })
 
+// ===ИГРА КТО ЛОХ НАЧАЛО===
 bot.onText(/\/wholox?/, msg => {
     const { id } = msg.chat
     bot.sendMessage(id, "Те кто хочет участвовать пишем '/go' ")
@@ -40,13 +43,15 @@ bot.onText(/\/result/, msg => {
     bot.sendMessage(msg.chat.id, randomLox(loxArray) || `${msg.from.first_name} ты забыл написать /wholox!!!`);
     loxArray = [];
 })
+// ===ИГРА КТО ЛОХ КОНЕЦ===
 
+// ===ШУТКИ ЧАКА НАЧАЛО===
 bot.onText(/\/chuck/i, msg => {
     getChuckJokes(msg);
 })
+// ===ШУТКИ ЧАКА КОНЕЦ===
 
-
-
+// ===ИГРА ТАЙМЕР НАЧАЛО===
 bot.onText(/\s([0-9])?\w+(\s)?(min|мин|минуту|минут|minutes|minute)/, msg => {
     const chatId = msg.chat.id;
     const target = msg.text.match(/\s([0-9])?\w+(\s)?(min|мин|минуту|минут|minutes|minute)/);
@@ -66,6 +71,7 @@ bot.onText(/\s([0-9])?\w+(\s)?(min|мин|минуту|минут|minutes|minute
     })();
     bot.sendMessage(chatId, txt);
 })
+// ===ИГРА ТАЙМЕР КОНЕЦ===
 
 console.log("THE BOT-SERVER IS RUNNING!");
 
