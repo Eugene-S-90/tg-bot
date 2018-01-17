@@ -11,7 +11,7 @@ let loxArray = [];
 bot.onText(/\/help/, msg => {
     const text = `Здарова,${msg.from.first_name}`;
     const faq = ` Вот что я умею :
-   === Таймер(любое колл минут) : "/1мин" или "/1min==="
+   === Таймер(любое колл минут) : "например, 1 минута"
    === Генератор шуток Чака : /chuck ===
    === Игра Кто Лишний?:) : /wholox === 
 
@@ -45,23 +45,26 @@ bot.onText(/\/chuck/i, msg => {
     getChuckJokes(msg);
 })
 
-bot.onText(/.([0-9])?\w+(\s)?(min|мин)/, msg => {
-    let parsedText = parseInt(msg.text.slice(1)) * 60;
-    let fixedText = parseInt(msg.text.slice(1))
-    let numberCases = showNumberCases(fixedText, ['минуту', 'минуты', 'минут']);
-    let txt = `Отлично ! ты зарядил таймер на ${parsedText / 60} ${numberCases}!`;
+
+
+bot.onText(/\s([0-9])?\w+(\s)?(min|мин|минуту|минут|minutes|minute)/, msg => {
+    const chatId = msg.chat.id;
+    const target = msg.text.match(/\s([0-9])?\w+(\s)?(min|мин|минуту|минут|minutes|minute)/);
+    const int = Number(target[0].match(/\d{1,}/g));
+    let parsedSeconds = int * 60;
+    let numberCases = showNumberCases(int, ['минуту', 'минуты', 'минут']);
+    let txt = `Отлично ! ты зарядил таймер на ${int} ${numberCases}!`;
 
     (() => {
         setInterval(() => {
-            parsedText = parsedText - 1;
-            if (parsedText === 1) {
-                bot.sendMessage(msg.chat.id, `${msg.from.first_name} устанавливал таймер на ${fixedText} ${numberCases}. Время вышло! ДЕЛАЙ ЧТО ДОЛЖЕН!!!!`);
+            parsedSeconds = parsedSeconds - 1;
+            if (parsedSeconds === 1) {
+                bot.sendMessage(msg.chat.id, `${msg.from.first_name} устанавливал таймер на ${int} ${numberCases}. Время вышло! ДЕЛАЙ ЧТО ДОЛЖЕН!!!!`);
                 bot.sendPhoto(msg.chat.id, fs.readFileSync(__dirname + "/adv.jpg"));
             }
         }, 1000);
     })();
-
-    bot.sendMessage(msg.chat.id, txt)
+    bot.sendMessage(chatId, txt);
 })
 
 console.log("THE BOT-SERVER IS RUNNING!");
