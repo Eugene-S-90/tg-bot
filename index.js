@@ -17,21 +17,21 @@ bot.onText(/\/help/, msg => {
    === Игра Кто Лишний?:) : /wholox === 
 
    `;
-
-    bot.sendMessage(msg.chat.id,text )
-    bot.sendMessage(msg.chat.id,faq, {
-        "reply_markup": {
-            "keyboard": [["1min", "5min","10min"],   ["/chuck"], ["/wholox"]]
-            }
-        });
+    bot.sendMessage(msg.chat.id, text)
 })
 // ===HELP КОНЕЦ===
 
-
-// bot.onText(/\/test/, msg => {
-//     const { id } = msg.chat
-//     bot.sendMessage(id,  JSON.stringify(msg))
+// bot.on('callback_query', query => {
+//     // bot.sendMessage(query.message.chat.id, `${query.data}`)
+//     bot.answerCallbackQuery(query.id,`${query.data}`)
 // })
+
+
+bot.onText(/\/test/, msg => {
+    const { id } = msg.chat
+    bot.sendMessage(id, JSON.stringify(msg))
+    bot.deleteMessage(msg.chat.id, msg.message_id)
+})
 
 // ===ИГРА КТО ЛОХ НАЧАЛО===
 bot.onText(/\/wholox?/, msg => {
