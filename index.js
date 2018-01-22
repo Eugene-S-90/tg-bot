@@ -15,7 +15,6 @@ bot.onText(/\/help/, msg => {
    === Таймер(любое колл минут) : "например, 1 минута"
    === Генератор шуток Чака : /chuck ===
    === Игра Кто Лишний?:) : /wholox === 
-
    `;
 
     bot.sendMessage(msg.chat.id, text )
@@ -40,6 +39,19 @@ bot.onText(/\/test/, msg => {
     console.log(msg.message_id);
     bot.sendMessage(id, JSON.stringify(msg) )
     bot.deleteMessage(msg.chat.id, msg.message_id);
+    bot.sendMessage(msg.chat.id, text)
+})
+// ===HELP КОНЕЦ===
+// bot.on('callback_query', query => {
+//     // bot.sendMessage(query.message.chat.id, `${query.data}`)
+//     bot.answerCallbackQuery(query.id,`${query.data}`)
+// })
+
+
+bot.onText(/\/test/, msg => {
+    const { id } = msg.chat
+    bot.sendMessage(id, JSON.stringify(msg))
+    bot.deleteMessage(msg.chat.id, msg.message_id)
 })
 
 // ===ИГРА КТО ЛОХ НАЧАЛО===
