@@ -18,20 +18,29 @@ bot.onText(/\/help/, msg => {
 
    `;
 
-    bot.sendMessage(msg.chat.id,text )
-    bot.sendMessage(msg.chat.id,faq, {
+    bot.sendMessage(msg.chat.id, text )
+    bot.sendMessage(msg.chat.id, faq, {
         "reply_markup": {
             "keyboard": [["1min", "5min","10min"],   ["/chuck"], ["/wholox"]]
             }
         });
 })
 // ===HELP КОНЕЦ===
+let delMsg = (id) => {
+    console.log(id);
+    (() => {
+        setInterval(() => {
+            console.log(msg);
+        }, 1000);
+    })();
+}
 
-
-// bot.onText(/\/test/, msg => {
-//     const { id } = msg.chat
-//     bot.sendMessage(id,  JSON.stringify(msg))
-// })
+bot.onText(/\/test/, msg => {
+    const { id } = msg.chat;
+    console.log(msg.message_id);
+    bot.sendMessage(id, JSON.stringify(msg) )
+    bot.deleteMessage(msg.chat.id, msg.message_id);
+})
 
 // ===ИГРА КТО ЛОХ НАЧАЛО===
 bot.onText(/\/wholox?/, msg => {
@@ -88,3 +97,9 @@ console.log("THE BOT-SERVER IS RUNNING!");
 
 
 
+// bot.onText(/^[/!#]del$/, async function (msg) {
+//     const arrayOfMessages = [msgID1, msgID2, msgID3, /* ... msgIDN */];
+//     for (let i in arrayOfMessages) {
+//         await bot.deleteMessage(msg.chat.id, arrayOfMessages[i]);
+//     }
+// });
