@@ -17,12 +17,16 @@ bot.onText(/\/help/, msg => {
    === Игра Кто Лишний?:) : /wholox === 
    `;
 
-    bot.sendMessage(msg.chat.id, text )
+    bot.sendMessage(msg.chat.id, text)
     bot.sendMessage(msg.chat.id, faq, {
         "reply_markup": {
-            "keyboard": [["1min", "5min","10min"],   ["/chuck"], ["/wholox"]]
-            }
-        });
+            "keyboard": [
+                ["1min", "5min", "10min"],
+                ["/chuck"],
+                ["/wholox"]
+            ]
+        }
+    });
 })
 // ===HELP КОНЕЦ===
 let delMsg = (id) => {
@@ -35,10 +39,17 @@ let delMsg = (id) => {
 }
 
 bot.onText(/\/test/, msg => {
-    const { id } = msg.chat;
+    const {
+        id
+    } = msg.chat;
     console.log(msg.message_id);
-    bot.sendMessage(id, JSON.stringify(msg) )
-    bot.deleteMessage(msg.chat.id, msg.message_id);
+    bot.sendMessage(id, JSON.stringify(msg))
+
+    setTimeout(() => {
+        bot.deleteMessage(msg.chat.id, msg.message_id + 1);
+    }, 10000);
+
+
     bot.sendMessage(msg.chat.id, text)
 })
 // ===HELP КОНЕЦ===
@@ -47,16 +58,17 @@ bot.onText(/\/test/, msg => {
 //     bot.answerCallbackQuery(query.id,`${query.data}`)
 // })
 
-
-bot.onText(/\/test/, msg => {
-    const { id } = msg.chat
-    bot.sendMessage(id, JSON.stringify(msg))
-    bot.deleteMessage(msg.chat.id, msg.message_id)
-})
+// bot.onText(/\/test/, msg => {
+//     const { id } = msg.chat
+//     bot.sendMessage(id, JSON.stringify(msg))
+//     bot.deleteMessage(msg.chat.id, msg.message_id)
+// })
 
 // ===ИГРА КТО ЛОХ НАЧАЛО===
 bot.onText(/\/wholox?/, msg => {
-    const { id } = msg.chat
+    const {
+        id
+    } = msg.chat
     bot.sendMessage(id, "Те кто хочет участвовать пишем '/go' ")
     bot.onText(/\/go/, msg => {
         let isExist = loxArray.some(item => item === msg.from.first_name);
