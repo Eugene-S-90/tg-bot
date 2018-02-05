@@ -42,7 +42,6 @@ bot.onText(/\/test/, msg => {
     const {
         id
     } = msg.chat;
-    console.log(msg.message_id);
     bot.sendMessage(id, JSON.stringify(msg))
     setTimeout(() => {
         bot.deleteMessage(msg.chat.id, msg.message_id);
