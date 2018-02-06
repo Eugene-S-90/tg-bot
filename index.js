@@ -4,6 +4,7 @@ const showNumberCases = require('./src/showNumberCases');
 const randomLox = require('./src/randomLox');
 const fetch = require('node-fetch')
 const getChuckJokes = require('./src/ChuckJokes');
+const getWeather = require('./src/weather');
 const game = require('./src/game/game')();
 
 let loxArray = [];
@@ -79,8 +80,10 @@ bot.onText(/\/result/, msg => {
 bot.onText(/\/chuck/i, msg => {
     getChuckJokes(msg);
 })
-// ===ШУТКИ ЧАКА НАЧАЛО===
-
+// ===погода===
+bot.onText(/\/погода/i, msg => {
+    getWeather(msg);
+})
 // ===ТАЙМЕР НАЧАЛО===
 bot.onText(/\s?([0-9])?\w+(\s)?(min|мин|минуту|минут|minutes|minute)/, msg => {
     const chatId = msg.chat.id;

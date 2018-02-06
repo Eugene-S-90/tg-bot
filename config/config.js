@@ -1,7 +1,8 @@
 const TelegramBot = require('node-telegram-bot-api');
+const constants = require('./const.js');
 
 
-const TOKEN = "518232523:AAFxiG4EW0W8kRatn3vCFqspeRKgQD_KKpI";
+const TOKEN = constants.botToken;
 const bot = new TelegramBot(TOKEN, {
     // interval сколько милисекунд ответа с клиента на сервер
     // autoStart отвечать на все сообщения или только когда бот включен

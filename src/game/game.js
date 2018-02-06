@@ -56,13 +56,12 @@ const game = () => {
             bot.sendMessage(data.from.id, `${hand} === ${value}`);
 
             if (value > 21) {
-                if(value == 22 && playerCards[0].card == playerCards[1].card) {
-                    bot.sendMessage(data.from.id, '2 туза');
-                } else {
-                    bot.sendMessage(data.from.id, 'ПЕРЕБОР ЧУВАК!!!');
-                }
+                (value == 22 && playerCards[0].card == playerCards[1].card) 
+                ? bot.sendMessage(data.from.id, '2 туза')
+                : bot.sendMessage(data.from.id, 'ПЕРЕБОР ЧУВАК!!!');
+
             }
-            
+
             setTimeout(() => {
                 bot.deleteMessage(data.chat.id, data.message_id);
             }, 10000);
