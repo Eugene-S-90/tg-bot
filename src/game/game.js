@@ -3,7 +3,7 @@ const newDeck = require('../../utils/deck')();
 
 let deck = [...newDeck];
 let tempDeck = [];
-let obj = {};
+let playersStore = {};
 let final = {};
 let players = 0;
 let counter = 0;
@@ -13,7 +13,12 @@ const game = () => {
         const {
             id
         } = msg.chat;
-        bot.sendMessage(id, "ПРАВИЛА ИГРЫ: Bot сдает карты. Стоимость карт в очках: туз - 11 очков; король - 4 очка; дама - 3 очка; валет - 2 очка; остальные карты по своему номиналу.", {
+        bot.sendMessage(id, `ПРАВИЛА ИГРЫ: Bot сдает карты. Стоимость карт в очках:
+        Туз - 11 очков;
+        Король - 4 очка;
+        Дама - 3 очка;
+        Валет - 2 очка;
+        Остальные карты по своему номиналу.`, {
             "reply_markup": {
                 "keyboard": [
                     ["Я в деле", "Еще карту", "С меня хватит"]
@@ -26,57 +31,62 @@ const game = () => {
     })
     bot.onText(/я в деле/i, data => {
         counter++;
-        obj[data.from.first_name] = [];
+        playersStore[data.from.first_name] = [];
         setTimeout(() => {
             bot.deleteMessage(data.chat.id, data.message_id);
         }, 10000);
     })
     bot.onText(/Еще карту/i, data => {
-        function get_random_card(cards) {
+        function getRandomCard(cards) {
             let card = cards.splice(Math.ceil(Math.random() * cards.length - 1), 1);
 
             tempDeck.push(card);
             deck = deck.filter(x => !tempDeck.includes(x));
-            obj[data.from.first_name].push(card[0]);
+            playersStore[data.from.first_name].push(card[0]);
 
-            let arr = [...obj[data.from.first_name]];
-            let hand = arr.reduce((prev, curent) => {
+            let playerCards = [...playersStore[data.from.first_name]];
+            let hand = playerCards.reduce((prev, curent) => {
                 let txt = `${curent.card} ${curent.suits} `
                 return prev + txt;
             }, '');
             let value = 0;
-            let checkScore = arr.map(item => {
+            let checkScore = playerCards.map(item => {
                 value += item.value
             });
             bot.sendMessage(data.from.id, `${hand} === ${value}`);
+
             if (value > 21) {
-                bot.sendMessage(data.from.id, 'ПЕРЕБОР ЧУВАК!!!');
+                if(value == 22 && playerCards[0].card == playerCards[1].card) {
+                    bot.sendMessage(data.from.id, '2 туза');
+                } else {
+                    bot.sendMessage(data.from.id, 'ПЕРЕБОР ЧУВАК!!!');
+                }
             }
+            
             setTimeout(() => {
                 bot.deleteMessage(data.chat.id, data.message_id);
             }, 10000);
         }
-        get_random_card(deck);
+        getRandomCard(deck);
 
     })
     bot.onText(/С меня хватит/i, data => {
-        let arr = [...obj[data.from.first_name]];
+        let playerCards = [...playersStore[data.from.first_name]];
         let value = 0;
-        arr.map(item => {
+        playerCards.map(item => {
             value += item.value;
         });
-        console.log(value);
         final[data.from.first_name] = value;
         players++;
         bot.sendMessage(data.from.id, `${value}`);
 
         if (counter == players) {
-            for (var item in final) {
+            for (let item in final) {
                 bot.sendMessage(data.chat.id, `${item}: ${final[item]}`);
             }
             deck = [...newDeck];
             tempDeck = [];
-            obj = {};
+            playersStore = {};
             players = 0;
             counter = 0;
         }
