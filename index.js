@@ -17,7 +17,7 @@ bot.onText(/\/help/, msg => {
    === Генератор шуток Чака : /chuck ===
    === Игра Кто Лишний?:) : /wholox === 
    === Игра в 21 : /game ===
-
+   === Погода в Днепре : /погода ===
    `;
 
     bot.sendMessage(msg.chat.id, text)
@@ -25,8 +25,8 @@ bot.onText(/\/help/, msg => {
         "reply_markup": {
             "keyboard": [
                 ["1min", "5min", "10min"],
-                ["/chuck"],
-                ["/wholox"]
+                ["/game", "/погода"],
+                ["/chuck", "/wholox"]
             ]
         }
     });
