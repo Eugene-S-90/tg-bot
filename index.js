@@ -2,6 +2,7 @@ const fs = require('fs');
 const bot = require('./config/config');
 const showNumberCases = require('./src/showNumberCases');
 const randomLox = require('./src/randomLox');
+const podbodryator = require('./src/podbodryator');
 const fetch = require('node-fetch')
 const getChuckJokes = require('./src/ChuckJokes');
 const getWeather = require('./src/weather');
@@ -76,6 +77,10 @@ bot.onText(/\/result/, msg => {
 })
 // ===ИГРА КТО ЛОХ КОНЕЦ===
 
+bot.onText(/\/bodri/, msg => {
+    bot.sendMessage(msg.chat.id, podbodryator());
+    console.log(podbodryator())
+})
 // ===ШУТКИ ЧАКА НАЧАЛО===
 bot.onText(/\/chuck/i, msg => {
     getChuckJokes(msg);
